@@ -8,10 +8,11 @@ class FileStorage:
     """Class serializes instances to JSON file and deserializes JSON file to instances."""
     __file_path = "file.json"
     __objects = {}
+    classes = {"BaseModel": BaseModel}
 
     def all(self):
         """Returns dictionary of objects"""
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         """Adds a new object to the dictionary"""
