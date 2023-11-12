@@ -20,8 +20,7 @@ class BaseModel:
         if kwargs:
             for key, value in kwargs.items():
                 if key == "__class__":
-                    class_name = value
-                    self.__class__ = getattr(models, class_name, BaseModel)
+                    self.__class__ = globals()[value]
                 elif key == "created_at" or key == "updated_at":
                     setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
                 else:

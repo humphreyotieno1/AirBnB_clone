@@ -48,10 +48,8 @@ class FileStorage:
                 new_objects = json.load(f)
                 for key, val in new_objects.items():
                     class_name = val['__class__']
-                    class_type = self.classes.get(class_name)
-                    if class_type:
-                        obj = class_type(**val)
-                        key = "{}.{}".format(class_name, obj.id)
-                        self.__objects[key] = obj
+                    class_type = globals()[class_name]
+                    obj = class_type(**val)
+                    self.__objects[key] = obj
         except FileNotFoundError:
             pass

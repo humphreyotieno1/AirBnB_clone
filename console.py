@@ -5,11 +5,6 @@ from models.engine.file_storage import FileStorage
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
 
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
@@ -75,18 +70,16 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """Prints all string rep of instances"""
-        arg = arg.split()
-        if not args:
-            print("**class name missing**")
-            return
-
-        class_name = args[0]
-        if arg not in storage.classes:
+        if not arg:
+            obj_dict = storage.all()
+        elif arg not in storage.classes:
             print("** class doesn't exist **")
             return
+        else:
+            class_name = storage.classes[arg].__name__
+            obj_dict = storage.all()
 
-            all_instances = storage.classes[class_name].all()
-            result = [str(obj) for obj in all_instances]
+            result = [str(obj) for obj in obj_dict.values() if type(obj).__name__ == class_name]
             print(result)
 
     def do_update(self, arg):
