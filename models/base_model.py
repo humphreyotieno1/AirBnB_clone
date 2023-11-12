@@ -20,11 +20,13 @@ class BaseModel:
         if kwargs:
             for key, value in kwargs.items():
                 if key == "__class__":
-                    self.__class__ = globals()[value]
-                elif key == "created_at" or key == "updated_at":
-                    setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
-                else:
-                    setattr(self, key, value)
+                    class_name = value
+                    if class_name in models.storage.classes:
+                        self.__class__ = models.storage.classes[class_name]
+                    elif key == "created_at" or key == "updated_at":
+                        setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
+                    else:
+                        setattr(self, key, value)
         else:
             models.storage.new(self)
         
