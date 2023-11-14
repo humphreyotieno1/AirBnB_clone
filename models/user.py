@@ -12,7 +12,7 @@ class User(BaseModel):
         first_name (str): first name of the user
         last_name (str): last name of the user
     """
-    
+
     email = ""
     password = ""
     first_name = ""
