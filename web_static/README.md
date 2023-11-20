@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 0. Inline styling
 mandatory
 Write an HTML page that displays a header and a footer.
@@ -299,3 +300,6 @@ styles/3-footer.css: for the footer style
 styles/6-filters.css: for the filters style
 styles/8-places.css: for the places style
 
+=======
+Web development for the AirBnB application
+>>>>>>> 43507e0501f99991be97d31a1b224372eab3e69c

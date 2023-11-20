@@ -3,15 +3,29 @@
 import json
 import os
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 class FileStorage:
     """Class serializes instances to JSON file and deserializes JSON file to instances."""
     __file_path = "file.json"
     __objects = {}
+    classes = {"BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Place": Place,
+            "Review": Review
+            }
 
     def all(self):
         """Returns dictionary of objects"""
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
         """Adds a new object to the dictionary"""
@@ -34,8 +48,9 @@ class FileStorage:
                 new_objects = json.load(f)
                 for key, val in new_objects.items():
                     class_name = val['__class__']
-                    class_type = globals()[class_name]
-                    obj = class_type(**val)
-                    self.__objects[key] = obj
+                    class_type = self.classes.get(class_name)
+                    if class_type:
+                        obj = class_type(**val)
+                        self.__objects[key] = obj
         except FileNotFoundError:
             pass
